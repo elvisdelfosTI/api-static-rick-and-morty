@@ -1,26 +1,42 @@
-const express = require("express")
-const fs = require('fs').promises;
-const PORT = process.env.PORT || 3003;
-const main = async  ()=>{
+const express = require("express");
+const fs = require("fs").promises;
+const path = require("path");
 
+const PORT = process.env.PORT || 3003;
+
+const main = async () => {
+  try {
     const app = express();
-    const file = await fs.readFile("./data.json", "utf8"); 
-    const data = JSON.parse(file)
-    
-    app.get('/',async (_,res)=>{
-        res.send ("🚀 Deplopy successfully")
-    })
-    app.get('/api/person/',async (_,res)=>{
-        console.log(data);
-        res.send (data)
-    })
-    app.get('/api/person/:id',async (req,res)=>{
-        const { id } = req.params; //
-        const found = data.find(item => item.id == id);
-        res.send (found)
-    })
-    app.listen(PORT, () => {
-        console.log(`Servidor escuchando en http://localhost:${PORT}`);
+
+    // Ruta absoluta al archivo data.json
+    const filePath = path.join(__dirname, "data.json");
+    const file = await fs.readFile(filePath, "utf8");
+    const data = JSON.parse(file);
+
+    app.get("/", (_, res) => {
+      res.send("🚀 Deploy successfully");
     });
-}
-main()
+
+    app.get("/api/person", (_, res) => {
+      res.json(data);
+    });
+
+    app.get("/api/person/:id", (req, res) => {
+      const { id } = req.params;
+      const found = data.find((item) => item.id == id);
+      if (found) {
+        res.json(found);
+      } else {
+        res.status(404).json({ error: "Person not found" });
+      }
+    });
+
+    app.listen(PORT, () => {
+      console.log(`Servidor escuchando en http://localhost:${PORT}`);
+    });
+  } catch (err) {
+    console.error("Error starting server:", err);
+  }
+};
+
+main();
