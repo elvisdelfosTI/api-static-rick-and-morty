@@ -8,10 +8,13 @@ const main = async  ()=>{
     const data = JSON.parse(file)
     
     app.get('/',async (_,res)=>{
+        res.send ("🚀 Deplopy successfully")
+    })
+    app.get('/api/person/',async (_,res)=>{
         console.log(data);
         res.send (data)
     })
-    app.get('/:id',async (req,res)=>{
+    app.get('/api/person/:id',async (req,res)=>{
         const { id } = req.params; //
         const found = data.find(item => item.id == id);
         res.send (found)
