@@ -1,6 +1,5 @@
 const express = require("express");
-const fs = require("fs").promises;
-const path = require("path");
+const data = require("./data.json")
 
 const PORT = process.env.PORT || 3003;
 
@@ -8,10 +7,6 @@ const main = async () => {
   try {
     const app = express();
 
-    // Ruta absoluta al archivo data.json
-    const filePath = path.join(__dirname, "data.json");
-    const file = await fs.readFile(filePath, "utf8");
-    const data = JSON.parse(file);
 
     app.get("/", (_, res) => {
       res.send("🚀 Deploy successfully");
