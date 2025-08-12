@@ -1,5 +1,6 @@
 const express = require("express")
 const fs = require('fs').promises;
+const PORT = process.env.PORT || 3003;
 const main = async  ()=>{
 
     const app = express();
@@ -15,8 +16,8 @@ const main = async  ()=>{
         const found = data.find(item => item.id == id);
         res.send (found)
     })
-    app.listen(3003, () => {
-        console.log("Servidor escuchando en http://localhost:3003");
+    app.listen(PORT, () => {
+        console.log(`Servidor escuchando en http://localhost:${PORT}`);
     });
 }
 main()
