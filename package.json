@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"No tests yet\"",
-    "start": "node app.js",
+    "start": "node index.js",
     "dev": "node --watch index.js"
   },
   "author": "",
